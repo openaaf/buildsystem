@@ -1,15 +1,25 @@
---- a/mksquashfs.c.org
-+++ b/mksquashfs.c
-@@ -46,6 +46,7 @@
+--- a/mksquashfs.c	2025-10-15 20:17:27.971005329 +0200
++++ b/mksquashfs.c.patched	2025-10-15 20:20:23.550443105 +0200
+@@ -42,6 +42,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/types.h>
+ #include <sys/mman.h>
++#include <sys/sysmacros.h>
+ #include <pthread.h>
  #include <math.h>
  #include <regex.h>
- #include <fnmatch.h>
+--- a/unsquashfs.c	2007-11-01 07:53:46.000000000 +0100
++++ b/unsquashfs.c.patched	2025-10-15 20:27:12.962013155 +0200
+@@ -34,6 +34,7 @@
+ #include <string.h>
+ #include <zlib.h>
+ #include <sys/mman.h>
 +#include <sys/sysmacros.h>
- 
- #ifndef linux
- #define __BYTE_ORDER BYTE_ORDER
---- a/read_fs.c.org
-+++ b/read_fs.c
+ #include <utime.h>
+ #include <pwd.h>
+ #include <grp.h>
+--- a/read_fs.c	2007-08-19 05:30:09.000000000 +0200
++++ b/read_fs.c.patched	2025-10-15 20:07:43.483530559 +0200
 @@ -61,14 +61,14 @@
  						fprintf(stderr, s, ## args); \
  					} while(0)
@@ -226,4 +236,3 @@
  			read_bytes(fd, sBlk->guid_start, sBlk->no_guids * sizeof(squashfs_uid), (char *) guids);
  		else {
  			squashfs_uid guids_copy[sBlk->no_guids];
-

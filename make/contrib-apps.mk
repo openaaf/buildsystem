@@ -12,6 +12,8 @@ BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-block-telnet-internet.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-recursive_action-fix.patch
 #BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-tar-fix.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-revert_ifa_flags.patch
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-mount_single_uuid.patch
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-xinsmod-xtar-xdev.patch
 
 $(ARCHIVE)/$(BUSYBOX_SOURCE):
 	$(WGET) https://busybox.net/downloads/$(BUSYBOX_SOURCE)

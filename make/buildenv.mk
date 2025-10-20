@@ -118,7 +118,7 @@ TARGET_EXTRA_CFLAGS   = -ffunction-sections -fdata-sections
 TARGET_EXTRA_LDFLAGS  = -Wl,--gc-sections
 ENIGMA_OPT_OPTION     =
 # Uncomment next line to support Power VU DES (requires public pti!)
-#POWER_VU_DES          = 1
+POWER_VU_DES          = 1
 endif
 ifeq ($(OPTIMIZATIONS), normal)
 TARGET_O_CFLAGS       = -O2

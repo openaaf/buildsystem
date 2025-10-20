@@ -1,7 +1,7 @@
 #
 # titan
 #
-TITAN_VER = 2.02
+TITAN_VER = 2.05
 
 TITAN_DEPS     = $(D)/bootstrap
 TITAN_DEPS    += $(KERNEL)
@@ -16,6 +16,7 @@ TITAN_DEPS    += $(D)/zlib
 TITAN_DEPS    += $(D)/openssl
 TITAN_DEPS    += $(D)/timezone
 TITAN_DEPS    += $(D)/tools-titan-tools
+TITAN_DEPS    += $(D)/libcurl
 
 T_CPPFLAGS    += -DSH4
 #T_CPPFLAGS    += -DSH4NEW
@@ -26,12 +27,9 @@ T_CPPFLAGS    += -DCAMSUPP
 T_LINKFLAGS    = -lm -lpthread -ldl -lpng -lfreetype -ldreamdvd -ljpeg -lz -lmmeimage -lipkg
 
 ifeq ($(MEDIAFW), eplayer3)
-T_CONFIG_OPTS += --enable-eplayer3
+#T_CONFIG_OPTS += --enable-eplayer3
 #TITAN_DEPS    += $(D)/tools-exteplayer3
-TITAN_DEPS    += $(D)/libcurl
-TITAN_DEPS    += $(D)/tools-exteplayer3
-TITAN_DEPS    += $(D)/libcurl
-TITAN_DEPS    += $(D)/ffmpeg
+TITAN_DEPS    += $(D)/titan-libeplayer3
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
@@ -41,16 +39,11 @@ TITAN_DEPS_   += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_multibox_
 TITAN_DEPS    += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 endif
 
-ifeq ($(MEDIAFW), gst-eplayer3)
+ifeq ($(MEDIAFW), gst-eplayer3-dual)
 #TITAN_DEPS    += $(D)/tools-exteplayer3
-TITAN_DEPS    += $(D)/libcurl
 TITAN_DEPS    += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_multibox_dvbmediasink
 TITAN_DEPS    += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
-TITAN_DEPS    += $(D)/tools-exteplayer3
-TITAN_DEPS    += $(D)/libcurl
-TITAN_DEPS    += $(D)/ffmpeg
-TITAN_DEPS_   += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_multibox_dvbmediasink
-TITAN_DEPS    += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+TITAN_DEPS    += $(D)/titan-libeplayer3
 
 T_CPPFLAGS    += -DEPLAYER3
 T_CPPFLAGS    += -DEXTEPLAYER3
@@ -97,14 +90,14 @@ T_CPPFLAGS    += -DSSLNEW
 T_CPPFLAGS    += -DDDTBUILD
 T_CPPFLAGS    += -DDVDPLAYER 
 T_CPPFLAGS    += -DCAMSUPP
-T_LINKFLAGS    += -lm -lpthread -ldl -lpng -lfreetype -ldreamdvd -ljpeg -lz -lmmeimage -lipkg
+T_LINKFLAGS    += -lssl -lcrypto -lcurl -lm -lpthread -ldl -lpng -lfreetype -ldreamdvd -ljpeg -lz -lmmeimage -lipkg
 
 ifeq ($(MEDIAFW), eplayer3)
 T_CPPFLAGS    += -DEPLAYER3
 T_CPPFLAGS    += -DEXTEPLAYER3
 #T_CPPFLAGS    += -I$(TOOLS_DIR)/exteplayer3/include
 T_CPPFLAGS    += -I$(SOURCE_DIR)/titan/libeplayer3/include
-T_LINKFLAGS   += -lssl -leplayer3 -lcrypto -lcurl
+T_LINKFLAGS   += -leplayer3
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
@@ -116,7 +109,7 @@ T_CPPFLAGS    += -I$(TARGET_DIR)/usr/lib/glib-2.0/include
 T_LINKFLAGS   += -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgstreamer-1.0
 endif
 
-ifeq ($(MEDIAFW), gst-explayer3)
+ifeq ($(MEDIAFW), gst-explayer3-dual)
 T_CPPFLAGS    += -DEPLAYER3
 T_CPPFLAGS    += -DEXTEPLAYER3
 T_CPPFLAGS    += -DEPLAYER4
@@ -127,7 +120,7 @@ T_CPPFLAGS    += -I$(TARGET_DIR)/usr/include/libxml2
 T_CPPFLAGS    += -I$(TARGET_DIR)/usr/lib/glib-2.0/include
 #T_CPPFLAGS    += -I$(TOOLS_DIR)/exteplayer3/include
 T_CPPFLAGS    += -I$(SOURCE_DIR)/titan/libeplayer3/include
-T_LINKFLAGS   += -lssl -leplayer3 -lcrypto -lcurl -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgstreamer-1.0
+T_LINKFLAGS   += -leplayer3 -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgstreamer-1.0
 
 T_CPPFLAGS    += -I$(TARGET_DIR)/usr/include/openssl
 T_CPPFLAGS    += -I$(TARGET_DIR)/usr/include/curl
@@ -164,7 +157,7 @@ T_CPPFLAGS    += $(PLATFORM_CPPFLAGS)
 #
 # yaud-titan
 #
-yaud-titan: yaud-none $(D)/titan $(D)/titan_release
+yaud-titan: yaud-none $(TITAN_DEPS) $(D)/titan $(D)/titan_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 	@echo "***************************************************************"
 	@echo -e "\033[01;32m"
@@ -188,20 +181,20 @@ yaud-titan-plugins: yaud-none $(D)/titan $(D)/titan-plugins $(D)/titan_release
 #
 # titan
 #
-REPO_TITAN=http://sbnc.dyndns.tv/svn/titan/
-#TITAN_PATCH  = build-titan/titan-$(TITAN_VER).patch
-#TITAN_PATCH += build-titan/titan-$(TITAN_VER)_model.patch
-#TITAN_PATCH += build-titan/titan-$(TITAN_VER)_icon.patch
-#ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-explayer3))
-#TITAN_PATCH += build-titan/titan-$(TITAN_VER)_exteplayer3.patch
-#endif
+REPO_TITAN=http://svn.dyndns.tv/svn/titan/
+TITAN_PATCH  = build-titan/titan-$(TITAN_VER).patch
+TITAN_PATCH += build-titan/titan-$(TITAN_VER)_model.patch
+TITAN_PATCH += build-titan/titan-$(TITAN_VER)_icon.patch
+ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-explayer3))
+TITAN_PATCH += build-titan/titan-$(TITAN_VER)_exteplayer3.patch
+endif
 
-$(D)/titan.do_prepare: $(TITAN_DEPS)
+$(D)/titan.do_prepare: | $(TITAN_DEPS)
 	REPO=$(REPO_TITAN); \
 	HEAD="master"; \
 	rm -rf $(SOURCE_DIR)/titan; \
 	rm -rf $(SOURCE_DIR)/titan.org; \
-	clear; \
+	echo clear; \
 	echo "Starting Titan build"; \
 	echo "===================="; \
 	echo; \
@@ -209,23 +202,38 @@ $(D)/titan.do_prepare: $(TITAN_DEPS)
 	[ -d "$(ARCHIVE)/titan.svn" ] || \
 	(mkdir $(ARCHIVE)/titan.svn; \
 	cd $(ARCHIVE)/titan.svn; \
-	echo -n "Retrieving Titan svn..."; svn checkout --username=public --password=public $(REPO_TITAN) -q; echo " done.";); \
+	echo -n "Retrieving Titan svn..."; \
+	svn checkout --username=public --password=public $(REPO_TITAN) -q; \
+	echo " done.";); \
 	[ -d "$(ARCHIVE)/titan.svn" ] && \
 	(cd $(ARCHIVE)/titan.svn/titan; \
-	echo -n "Updating archived Titan svn..."; svn update --username=public --password=public -q; echo " done.";); \
-	echo -n "Copying local svn content to build environment..."; cp -ra $(ARCHIVE)/titan.svn/titan $(SOURCE_DIR)/titan; echo " done."; \
+	echo -n "Updating archived Titan svn..."; \
+	svn update --username=public --password=public -q; \
+	echo " done.";); \
+	echo -n "Copying local svn content to build environment..."; \
+	cp -ra $(ARCHIVE)/titan.svn/titan $(SOURCE_DIR)/titan; \
+	echo " done."; \
 	cp -ra $(SOURCE_DIR)/titan $(SOURCE_DIR)/titan.org; \
 	set -e; cd $(SOURCE_DIR)/titan; \
 	echo >> Makefile.am; \
-	echo "Applying Titan patches..."; \
-	$(call apply_patches, $(TITAN_PATCH)); \
+#	echo "Applying Titan patches..."; \
+#	$(call apply_patches, $(TITAN_PATCH)); \
 	cd $(SOURCE_DIR)/titan; \
-	cp ./libeplayer3/Makefile.am.sh4 ./libeplayer3/Makefile.am; \
+#	cp ./libeplayer3/Makefile.am.sh4 ./libeplayer3/Makefile.am; \
 	cp ./titan/Makefile.am.4.3 ./titan/Makefile.am; \
 	echo >> Makefile.am; \
 	echo "titan_LDADD = $(T_LINKFLAGS)" >> ./titan/Makefile.am; \
+#	cp ../../default/Makefile.am .; \
+#	cp ../../default/configure.ac .; \
+#	cp ./acinclude.m4_off ./acinclude.m4; \
+#	cp ../../default/acinclude.m4 .; \
+	echo BOXTYPE = $(BOXTYPE); \
+	echo BOXMODEL = $(BOXMODEL); \
+	echo MACHINE_BRAND = $(MACHINE_BRAND); \
+	echo MACHINE_NAME = $(MACHINE_NAME); \
+#	sed "s/ufs912/aa/g" -i $(SOURCE_DIR)/titan/acinclude.m4 
 	echo; \
-	touch $@
+	$(TOUCH)
 
 $(SOURCE_DIR)/titan/titan/config.status: $(D)/titan.do_prepare
 	$(SILENT)cd $(SOURCE_DIR)/titan/titan; \
@@ -241,7 +249,7 @@ $(SOURCE_DIR)/titan/titan/config.status: $(D)/titan.do_prepare
 			--bindir=/usr/local/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
-			--with-boxtype=duckbox \
+			--with-boxtype=$(BOXMODEL) \
 			--with-boxmodel=$(BOXTYPE) \
 			--enable-multicom324 \
 			$(TITAN_OPT_OPTION) \
@@ -253,7 +261,7 @@ $(D)/titan.do_compile: $(SOURCE_DIR)/titan/titan/config.status
 		$(MAKE) all
 	@touch $@
 
-$(D)/titan:  $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan.do_compile
+$(D)/titan: $(D)/titan.do_prepare $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/titan/titan install DESTDIR=$(TARGET_DIR)
 	@echo -n "Stripping..."
 	$(SILENT)if [ -e $(TARGET_DIR)/usr/bin/titan ]; then \
@@ -387,44 +395,46 @@ $(D)/titan-libdreamdvd: $(D)/titan.do_prepare $(D)/libdvdnav
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdreamdvd.pc
 	$(TOUCH)
 
+
+L_CPPFLAGS    += -I$(TARGET_DIR)/usr/include
+
 #
 # titan-libeplayer3
 #
-TITAN_LIBEPLAYER3_PATCH =
-$(D)/titan-libeplayer3.do_prepare: $(D)/titan.do_prepare
-		$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
+$(D)/titan-libeplayer3: $(D)/bootstrap $(D)/ffmpeg $(D)/titan.do_prepare
+	$(START_BUILD)
+	cd $(SOURCE_DIR)/titan/libeplayer3; \
 		if [ ! -d m4 ]; then mkdir m4; fi; \
 		./autogen.sh $(SILENT_OPT); \
 		$(BUILDENV); \
-		$(call apply_patches, $(TITAN_LIBEPLAYER3_PATCH)); \
-		./configure $(SILENT_CONFIGURE) \
-			--build=$(BUILD) \
-			--host=$(TARGET) \
-			$(T_CONFIG_OPTS) \
-			--datadir=/usr/local/share \
-			--libdir=/usr/lib \
-			--bindir=/usr/local/bin \
-			--prefix=/usr \
-			--sysconfdir=/etc \
-			$(TITAN_OPT_OPTION) \
-			PKG_CONFIG=$(PKG_CONFIG) \
-			CPPFLAGS="$(T_CPPFLAGS)"
-	@touch $@
-
-$(D)/titan-libeplayer3.do_compile: $(D)/titan_libeplayer3.do_prepare
-	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
-		$(MAKE) all
-	$(TOUCH)
-
-$(D)/titan-libeplayer3: $(D)/titan.do_prepare
-	$(START_BUILD)
-	cd $(SOURCE_DIR)/titan/libeplayer3; \
-		$(CONFIGURE_TOOLS) \
+		$(CONFIGURE) \
 			--prefix= \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			CPPFLAGS="$(L_CPPFLAGS)" \
 		; \
-		$(MAKE) all; \
+		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
+
+
+$(D)/titan-libeplayer3-clean:
+#	rm -f $(D)/titan.do_compile
+#	rm -f $(D)/titan.do_prepare
+	rm -f $(D)/titan_libeplayer3
+	rm -f $(D)/titan_libeplayer3.do_compile
+	rm -f $(D)/titan/libeplayer3/.libs
+	cd $(SOURCE_DIR)/titan/libeplayer3; \
+		$(MAKE) clean
+
+$(D)/titan-libeplayer3-distclean:
+	rm -f $(D)/titan
+	rm -f $(D)/titan.do_compile
+	rm -f $(D)/titan.do_prepare
+	rm -f $(D)/titan_libeplayer3
+	rm -f $(D)/titan_libeplayer3.do_compile
+	rm -f $(D)/titan/libeplayer3/.libs
+	rm -rf $(SOURCE_DIR)/titan
+	rm -rf $(SOURCE_DIR)/titan.org
 
 $(D)/titan-clean:
 	rm -f $(D)/titan

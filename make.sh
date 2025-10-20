@@ -77,7 +77,7 @@ FFMPEG_VER2="2.8.22"
 FFMPEG_VER3="3.4.3"
 FFMPEG_VER42="4.2.2"
 FFMPEG_VER43="4.3.2"
-#FFMPEG_VER44="4.4.2"
+FFMPEG_VER44="4.4.2"
 
 ##############################################
 
@@ -416,22 +416,34 @@ case "$IMAGE" in
 		fi
 
 		case $6 in
-			[1-2]) REPLY=$6;;
+			[1-3]) REPLY=$6;;
 				*)	echo -e "\nMedia Framework:"
 					echo "   1*) eplayer3"
-					echo "   2)  eplayer3+gstreamer (not recommended and not tested)"
+					echo "   2)  gstreamer)"
+					echo "   3)  gstreamer/eplayer3 (E2 player is switchable between gstreamer & libeplayer3)"
 					read -p "Select media framework (1-2)? ";;
 		esac
 
 		case "$REPLY" in
-#			1) MEDIAFW="eplayer3";;
-			2) MEDIAFW="gst-eplayer3";;
+			1) MEDIAFW="eplayer3";;
+			2) MEDIAFW="gstreamer";;
+			3) MEDIAFW="gst-eplayer3-dual";;
 			*) MEDIAFW="eplayer3";;
 		esac
 		# Titan is always built with ffmpeg version 3.X.X
 #		MEDIAFW="eplayer3"
+#		FFMPEG_VER=$FFMPEG_VER3
+#		export FFMPEG_VER
+
+		# Select ffmpeg version by uncommenting one line (used for internal player)
+		#FFMPEG_VER=$FFMPEG_VER2
 		FFMPEG_VER=$FFMPEG_VER3
-		export FFMPEG_VER
+		#FFMPEG_VER=$FFMPEG_VER42
+#		FFMPEG_VER=$FFMPEG_VER43
+		#FFMPEG_VER=$FFMPEG_VER44
+
+#		export FFMPEG_VER
+#		echo "FFMPEG_VER=$FFMPEG_VER" >> config
 
 		if [ "$OPTIMIZATIONS" == "small" ]; then
 			OPTIMIZATIONS="size"

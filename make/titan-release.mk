@@ -139,7 +139,7 @@ titan-release-ufs912:
 		cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/; \
 	fi
 	$(SILENT)cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
-	$(SILENT)cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
+	$(SILENT)cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/ 
 	$(SILENT)cp $(SKEL_ROOT)/boot/video_7111.elf $(RELEASE_DIR)/boot/video.elf
 	$(SILENT)cp $(SKEL_ROOT)/boot/audio_7111.elf $(RELEASE_DIR)/boot/audio.elf
 	$(SILENT)cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
@@ -572,9 +572,9 @@ titan-release-base:
 #
 # /bin
 	$(SILENT)cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/bin/* $(RELEASE_DIR)/bin
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/bin/* $(RELEASE_DIR)/bin
 # /etc
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/etc/* $(RELEASE_DIR)/etc
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/etc/* $(RELEASE_DIR)/etc
 	$(SILENT)echo "sh4" > $(RELEASE_DIR)/etc/.arch
 	$(SILENT)echo "ATEMIO" > $(RELEASE_DIR)/etc/.buildgroup
 	$(SILENT)touch $(RELEASE_DIR)/etc/.firstboot
@@ -582,11 +582,11 @@ titan-release-base:
 	$(SILENT)touch $(RELEASE_DIR)/etc/.sh4
 	$(SILENT)touch $(RELEASE_DIR)/etc/.stable
 # /etc/titan.restore
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/config/* $(RELEASE_DIR)/etc/titan.restore/mnt/config/
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/settings/* $(RELEASE_DIR)/etc/titan.restore/mnt/settings/
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/autostart/* $(RELEASE_DIR)/etc/titan.restore/var/etc/autostart/
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/boot/* $(RELEASE_DIR)/etc/titan.restore/var/etc/boot/
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/ipkg/* $(RELEASE_DIR)/etc/titan.restore/var/etc/ipkg/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/config/* $(RELEASE_DIR)/etc/titan.restore/mnt/config/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/settings/* $(RELEASE_DIR)/etc/titan.restore/mnt/settings/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/autostart/* $(RELEASE_DIR)/etc/titan.restore/var/etc/autostart/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/boot/* $(RELEASE_DIR)/etc/titan.restore/var/etc/boot/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/var/etc/ipkg/* $(RELEASE_DIR)/etc/titan.restore/var/etc/ipkg/
 # /lib
 	$(SILENT)cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
 	$(SILENT)rm -f $(TARGET_DIR)/usr/lib/libdl.so
@@ -600,15 +600,15 @@ titan-release-base:
 # /mnt
 	$(SILENT)cp -f $(SKEL_ROOT)/etc/{auto.misc,hostname,hosts,passwd,resolv.conf} $(RELEASE_DIR)/mnt/network
 	$(SILENT)touch $(RELEASE_DIR)/mnt/network/wpa_supplicant.conf
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/default_gw $(RELEASE_DIR)/mnt/network
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/default_gw $(RELEASE_DIR)/mnt/network
 	$(SILENT)cp -f $(SKEL_ROOT)/etc/network/* $(RELEASE_DIR)/mnt/network
 # /mnt/config
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/config/* $(RELEASE_DIR)/mnt/config/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/config/* $(RELEASE_DIR)/mnt/config/
 # /mnt/settings
-	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/settings/* $(RELEASE_DIR)/mnt/settings/
+##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/settings/* $(RELEASE_DIR)/mnt/settings/
 # /sbin
 	$(SILENT)cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/sbin/* $(RELEASE_DIR)/sbin
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/sbin/* $(RELEASE_DIR)/sbin
 # /usr/bin
 	$(SILENT)cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 # /usr/lib
@@ -634,10 +634,14 @@ endif
 	$(SILENT)cp -f $(SKEL_ROOT)/etc/network/interfaces $(RELEASE_DIR)/var/etc/network
 	$(SILENT)mkdir $(RELEASE_DIR)/var/etc/network/{if-down.d,if-post-down.d,if-post-up.d,if-pre-down.d,if-pre-up.d,if-up.d}
 # /var/usr/lib
-	$(SILENT)mv $(RELEASE_DIR)/lib/libavcodec* $(RELEASE_DIR)/var/usr/lib/
-	$(SILENT)mv $(RELEASE_DIR)/lib/libdvdnav* $(RELEASE_DIR)/var/usr/lib/
-	$(SILENT)mv $(RELEASE_DIR)/lib/libdvdread* $(RELEASE_DIR)/var/usr/lib/
-	$(SILENT)mv $(RELEASE_DIR)/lib/libeplayer3* $(RELEASE_DIR)/var/usr/lib/
+##ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3 gst-eplayer3-dual))
+##	$(SILENT)mv $(RELEASE_DIR)/lib/libavcodec* $(RELEASE_DIR)/var/usr/lib/
+##endif
+##	$(SILENT)mv $(RELEASE_DIR)/lib/libdvdnav* $(RELEASE_DIR)/var/usr/lib/
+##	$(SILENT)mv $(RELEASE_DIR)/lib/libdvdread* $(RELEASE_DIR)/var/usr/lib/
+##ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3 gst-eplayer3-dual))
+##	$(SILENT)mv $(RELEASE_DIR)/lib/libeplayer3* $(RELEASE_DIR)/var/usr/lib/
+##endif
 # /var/usr/local/share/titan/help
 	$(SILENT)cp -rf $(SOURCE_DIR)/titan/help/ $(RELEASE_DIR)/var/usr/local/share/titan/
 # /var/usr/local/share/titan/po
@@ -775,21 +779,25 @@ endif
 #	$(SILENT)cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/var/usr/lib/
 	$(SILENT)rm -rf $(RELEASE_DIR)/var/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VER),sigc++-2.0}
 	$(SILENT)rm -f $(RELEASE_DIR)/var/usr/lib/*.{a,o,la}
-	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so
-	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so.57
-	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so.57.100
-	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so
-	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so.4
-	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so.4.1.2
-	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so
-	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so.4
-	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so.4.1.2
-	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so
-	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so.4
-	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so.4.1.2
-	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so
-	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so.0
-	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so.0.0.0
+##ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3 gst-eplayer3-dual))
+##	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so
+##	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so.57
+##	$(SILENT)ln -sf /var/usr/lib/libavcodec.so.57.107.100 $(RELEASE_DIR)/lib/libavcodec.so.57.100
+##endif
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so.4
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnav.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnav.so.4.1.2
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so.4
+##	$(SILENT)ln -sf /var/usr/lib/libdvdnavmini.so.4.1.2 $(RELEASE_DIR)/lib/libdvdnavmini.so.4.1.2
+##	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so
+##	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so.4
+##	$(SILENT)ln -sf /var/usr/lib/libdvdread.so.4.1.2 $(RELEASE_DIR)/lib/libdvdread.so.4.1.2
+##ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3 gst-eplayer3-dual))
+##	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so
+##	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so.0
+##	$(SILENT)ln -sf /var/usr/lib/libeplayer3.so.0.0.0 $(RELEASE_DIR)/lib/libeplayer3.so.0.0.0
+##endif
 #	$(SILENT)chmod 755 $(RELEASE_DIR)/var/usr/lib/*
 #
 # fonts
@@ -837,7 +845,7 @@ endif
 # copy root_titan
 #
 # /bin
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/bin/* $(RELEASE_DIR)/bin
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/bin/* $(RELEASE_DIR)/bin
 	$(SILENT)ln -sf /sbin/abfrage $(RELEASE_DIR)/bin/abfrage
 	$(SILENT)ln -sf /sbin/backup.sh $(RELEASE_DIR)/bin/backup.sh
 	$(SILENT)ln -sf /sbin/bitrate $(RELEASE_DIR)/bin/bitrate
@@ -933,11 +941,11 @@ endif
 #	$(SILENT)ln -sf /sbin/mkfs.info $(RELEASE_DIR)/sbin/mkfs.jfs.gui
 #	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/boot/* $(RELEASE_DIR)/boot
 # /lib
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/lib/* $(RELEASE_DIR)/lib
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/lib/* $(RELEASE_DIR)/lib
 #	$(SILENT)ln -sf /tmp $(RELEASE_DIR)/lib/init
 #	$(SILENT)ln -sf /usr/share/fonts $(RELEASE_DIR)/lib/fonts
 # /etc
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/sbin/* $(RELEASE_DIR)/sbin
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/sbin/* $(RELEASE_DIR)/sbin
 #	echo "oops"
 #	$(SILENT)ln -sf /usr/share $(RELEASE_DIR)/usr/local/share
 #	echo "oops"
@@ -950,7 +958,7 @@ endif
 #	$(SILENT)ln -sf /var/usr/share/fonts $(RELEASE_DIR)/usr/share/fonts
 #	$(SILENT)ln -sf /var/usr/share/gmediarender $(RELEASE_DIR)/usr/share/gmediarender
 #	$(SILENT)ln -sf /var/usr/share/netsurf $(RELEASE_DIR)/usr/share/netsurf
-	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/var/* $(RELEASE_DIR)/var/
+##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/var/* $(RELEASE_DIR)/var/
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hs8200 spark7162 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_3000hd))
 #	$(SILENT)rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 #	$(SILENT)rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
