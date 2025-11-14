@@ -589,6 +589,11 @@ esac
 
 echo "DESTINATION=$DESTINATION" >> config
 
+echo "BUILDUSER=$(whoami)" >> config
+
+HOST_VERSION_ID=$(cat /etc/os-release | sed -nr 's/.*VERSION_ID="([^"]+)".*/\1/p')
+echo "HOST_VERSION_ID=$HOST_VERSION_ID" >> config
+
 ##############################################
 
 chmod 755 $CURDIR/build
