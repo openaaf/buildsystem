@@ -351,7 +351,11 @@ $(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/po
 #
 # e2fsprogs
 #
+ifeq ($(HOST_VERSION_ID), 18.04)
+E2FSPROGS_VER = 1.43.7
+else
 E2FSPROGS_VER = 1.46.5
+endif
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
 E2FSPROGS_PATCH  = e2fsprogs-$(E2FSPROGS_VER).patch
 
