@@ -1,4 +1,3 @@
- ./make.sh 11 2 1 6 1 1 1 1
 #!/bin/bash
 # Version 20240105.1
 
