@@ -643,9 +643,9 @@ endif
 ##	$(SILENT)mv $(RELEASE_DIR)/lib/libeplayer3* $(RELEASE_DIR)/var/usr/lib/
 ##endif
 # /var/usr/local/share/titan/help
-	$(SILENT)cp -rf $(SOURCE_DIR)/titan/help/ $(RELEASE_DIR)/var/usr/local/share/titan/
+	$(SILENT)cp -rf $(SOURCE_DIR)/svn/titan/help/ $(RELEASE_DIR)/var/usr/local/share/titan/
 # /var/usr/local/share/titan/po
-	$(SILENT)cp -rf $(SOURCE_DIR)/titan/po/ $(RELEASE_DIR)/var/usr/local/share/titan/
+	$(SILENT)cp -rf $(SOURCE_DIR)/svn/titan/po/ $(RELEASE_DIR)/var/usr/local/share/titan/
 # uImage
 	$(SILENT)cp $(TARGET_DIR)/boot/$(KERNELNAME) $(RELEASE_DIR)/boot/
 #	$(SILENT)ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
