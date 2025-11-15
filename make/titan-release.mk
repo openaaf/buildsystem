@@ -1058,7 +1058,9 @@ endif
 	$(SILENT)if [ -e $(RELEASE_DIR)/etc/cron.d ]; then \
 		$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/cron.d; \
 	fi
-	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/e2fsprogs
+	$(SILENT)if [ -e $(RELEASE_DIR)/lib/e2fsprogs ]; then \
+		$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/e2fsprogs; \
+	fi
 #	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/glib-2.0
 #	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/inittab.d
 #	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/network
