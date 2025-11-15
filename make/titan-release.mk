@@ -576,7 +576,7 @@ titan-release-base:
 # /etc
 ##	$(SILENT)cp -aR $(SKEL_ROOT)/root_titan/etc/* $(RELEASE_DIR)/etc
 	$(SILENT)echo "sh4" > $(RELEASE_DIR)/etc/.arch
-	$(SILENT)echo "ATEMIO" > $(RELEASE_DIR)/etc/.buildgroup
+	$(SILENT)echo "openAAF" > $(RELEASE_DIR)/etc/.buildgroup
 	$(SILENT)touch $(RELEASE_DIR)/etc/.firstboot
 	$(SILENT)touch $(RELEASE_DIR)/etc/.player3
 	$(SILENT)touch $(RELEASE_DIR)/etc/.sh4
