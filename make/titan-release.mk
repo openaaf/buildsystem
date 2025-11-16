@@ -1056,10 +1056,10 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	$(SILENT)rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 endif
 	$(SILENT)if [ -e $(RELEASE_DIR)/etc/cron.d ]; then \
-		$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/cron.d; \
+		rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/cron.d; \
 	fi
 	$(SILENT)if [ -e $(RELEASE_DIR)/lib/e2fsprogs ]; then \
-		$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/e2fsprogs; \
+		rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/e2fsprogs; \
 	fi
 #	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/lib/glib-2.0
 #	$(SILENT)rmdir --ignore-fail-on-non-empty $(RELEASE_DIR)/etc/inittab.d
