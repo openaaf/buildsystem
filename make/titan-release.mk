@@ -559,14 +559,14 @@ titan-release-base:
 #	$(SILENT)ln -s /usr/share $(RELEASE_DIR)/share
 #	$(SILENT)ln -s /usr/share $(RELEASE_DIR)/usr/local/share
 #	$(SILENT)ln -s /etc $(RELEASE_DIR)/usr/local/etc
-#	$(SILENT)mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
-#	$(SILENT)ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
-#	$(SILENT)ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc0.d/S40umountfs
-#	$(SILENT)ln -s ../init.d/halt $(RELEASE_DIR)/etc/rc.d/rc0.d/S90halt
-#	$(SILENT)mkdir -p $(RELEASE_DIR)/etc/rc.d/rc6.d
-#	$(SILENT)ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc6.d/S20sendsigs
-#	$(SILENT)ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc6.d/S40umountfs
-#	$(SILENT)ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
+	$(SILENT)mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
+	$(SILENT)ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
+	$(SILENT)ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc0.d/S40umountfs
+	$(SILENT)ln -s ../init.d/halt $(RELEASE_DIR)/etc/rc.d/rc0.d/S90halt
+	$(SILENT)mkdir -p $(RELEASE_DIR)/etc/rc.d/rc6.d
+	$(SILENT)ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc6.d/S20sendsigs
+	$(SILENT)ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc6.d/S40umountfs
+	$(SILENT)ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
 #	$(SILENT)ln -sf /usr/share/tuxbox/titan/icons/logo $(RELEASE_DIR)/logos
 #	$(SILENT)ln -sf /usr/share/tuxbox/titan/icons/logo $(RELEASE_DIR)/var/httpd/logos
 #
@@ -580,7 +580,7 @@ titan-release-base:
 	$(SILENT)touch $(RELEASE_DIR)/etc/.firstboot
 	$(SILENT)touch $(RELEASE_DIR)/etc/.player3
 	$(SILENT)touch $(RELEASE_DIR)/etc/.sh4
-	$(SILENT)touch $(RELEASE_DIR)/etc/.stable
+#	$(SILENT)touch $(RELEASE_DIR)/etc/.stable
 # /etc/titan.restore
 ##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/config/* $(RELEASE_DIR)/etc/titan.restore/mnt/config/
 ##	$(SILENT)cp -f $(SKEL_ROOT)/root_titan/mnt/settings/* $(RELEASE_DIR)/etc/titan.restore/mnt/settings/
