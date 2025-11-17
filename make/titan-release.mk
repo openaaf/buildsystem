@@ -1119,15 +1119,15 @@ $(D)/titan_release: titan-release-base titan-release-$(BOXTYPE)
 # nicht die feine Art, aber funktioniert ;)
 #
 	$(SILENT)cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
-#	$(SILENT)rm -fr $(RELEASE_DIR)/etc
-#	$(SILENT)ln -sf /var/etc $(RELEASE_DIR)
-#
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/lib/init
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/lock
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/log
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/run
-#	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/tmp
+	$(SILENT)rm -fr $(RELEASE_DIR)/etc
+	$(SILENT)ln -sf /var/etc $(RELEASE_DIR)
+
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/lib/init
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/lock
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/log
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/run
+	$(SILENT)ln -s /tmp $(RELEASE_DIR)/var/tmp
 #
 #	$(SILENT)mv -f $(RELEASE_DIR)/usr/share/tuxbox/titan/icons/scan.jpg $(RELEASE_DIR)/var/boot/
 #	$(SILENT)ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/titan/icons/
