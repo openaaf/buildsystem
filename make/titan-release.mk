@@ -648,7 +648,7 @@ endif
 	$(SILENT)cp -rf $(SOURCE_DIR)/svn/titan/po/ $(RELEASE_DIR)/var/usr/local/share/titan/
 # uImage
 	$(SILENT)cp $(TARGET_DIR)/boot/$(KERNELNAME) $(RELEASE_DIR)/boot/
-#	$(SILENT)ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
+	$(SILENT)ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
 	$(SILENT)cp -dp $(SKEL_ROOT)/sbin/MAKEDEV $(RELEASE_DIR)/sbin/
 	$(SILENT)ln -sf ../sbin/MAKEDEV $(RELEASE_DIR)/dev/MAKEDEV
 	$(SILENT)ln -sf ../../sbin/MAKEDEV $(RELEASE_DIR)/lib/udev/MAKEDEV
