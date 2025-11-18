@@ -5,7 +5,7 @@ TITAN_VER = 2.05
 
 TITAN_DEPS     = $(D)/bootstrap
 TITAN_DEPS    += $(KERNEL)
-#TITAN_DEPS    += $(D)/libopenthreads
+TITAN_DEPS    += $(D)/libopenthreads
 TITAN_DEPS    += $(D)/system-tools
 TITAN_DEPS    += $(D)/module_init_tools
 TITAN_DEPS    += $(LIRC)
