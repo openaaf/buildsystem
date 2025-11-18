@@ -268,10 +268,15 @@ endif
 #
 #$(D)/libass $(D)/libxml2 $(D)/libroxml
 
+FFMPEG_CONF_OPTS   = --disable-librtmp
+FFMPEG_EXTERN =
+FFMPEG_DISABLE = --disable-muxers --disable-parsers --disable-encoders --disable-decoders --disable-demuxers --disable-filters
+
+
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(FFMPEG_EXTERN) $(LIBRTMPDUMP) $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
@@ -302,22 +307,20 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--disable-avx \
 			--disable-fma4 \
 			--disable-vfp \
+			--disable-neon \
 			--disable-inline-asm \
-			--disable-x86asm \
+			--disable-yasm \
 			--disable-mips32r2 \
 			--disable-mipsdspr2 \
 			--disable-mipsfpu \
 			--disable-fast-unaligned \
-			--disable-armv5te \
-			--disable-armv6 \
-			--disable-armv6t2 \
-			--disable-neon \
 			\
 			--disable-dxva2 \
 			--disable-vaapi \
 			--disable-vdpau \
 			\
-			--disable-muxers \
+			$(FFMPEG_DISABLE) \
+			\
 			--enable-muxer=flac \
 			--enable-muxer=mp3 \
 			--enable-muxer=h261 \
@@ -329,7 +332,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-muxer=mpegts \
 			--enable-muxer=ogg \
 			\
-			--disable-parsers \
 			--enable-parser=aac \
 			--enable-parser=aac_latm \
 			--enable-parser=ac3 \
@@ -345,7 +347,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-parser=vc1 \
 			--enable-parser=vorbis \
 			\
-			--disable-encoders \
 			--enable-encoder=aac \
 			--enable-encoder=h261 \
 			--enable-encoder=h263 \
@@ -356,26 +357,21 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-encoder=mpeg2video \
 			--enable-encoder=png \
 			\
-			--disable-decoders \
 			--enable-decoder=aac \
 			--enable-decoder=aac_latm \
-			--enable-decoder=ac3 \
 			--enable-decoder=dca \
 			--enable-decoder=dvbsub \
 			--enable-decoder=dvdsub \
 			--enable-decoder=flac \
-			--enable-decoder=flv \
 			--enable-decoder=h261 \
 			--enable-decoder=h263 \
 			--enable-decoder=h263i \
 			--enable-decoder=h264 \
 			--enable-decoder=mjpeg \
-			--enable-decoder=movtext \
-			--enable-decoder=mp2 \
 			--enable-decoder=mp3 \
+			--enable-decoder=movtext \
 			--enable-decoder=mpeg1video \
 			--enable-decoder=mpeg2video \
-			--enable-decoder=mpeg4 \
 			--enable-decoder=msmpeg4v1 \
 			--enable-decoder=msmpeg4v2 \
 			--enable-decoder=msmpeg4v3 \
@@ -383,11 +379,11 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-decoder=pcm_s16be \
 			--enable-decoder=pcm_s16le_planar \
 			--enable-decoder=pcm_s16be_planar \
-			--enable-decoder=pcm_s24le \
-			--enable-decoder=pcm_s24be \
-			--enable-decoder=pcm_s24le_planar \
 			--enable-decoder=pgssub \
 			--enable-decoder=png \
+			--enable-decoder=ra_144 \
+			--enable-decoder=ra_288 \
+			--enable-decoder=rawvideo \
 			--enable-decoder=srt \
 			--enable-decoder=subrip \
 			--enable-decoder=subviewer \
@@ -395,19 +391,18 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-decoder=text \
 			--enable-decoder=theora \
 			--enable-decoder=vorbis \
-			--enable-decoder=wmav1 \
-			--enable-decoder=wmav2 \
-			--enable-decoder=wmv3 \
-			--enable-decoder=wmv1 \
-			--enable-decoder=wmv2 \
 			--enable-decoder=wmv3 \
 			--enable-decoder=xsub \
+			--enable-decoder=wmapro \
+			--enable-decoder=wmav1 \
+			--enable-decoder=wmav2 \
+			--enable-decoder=wmavoice \
 			\
-			--disable-demuxers \
 			--enable-demuxer=aac \
 			--enable-demuxer=ac3 \
 			--enable-demuxer=avi \
 			--enable-demuxer=dts \
+			--enable-demuxer=dash \
 			--enable-demuxer=flac \
 			--enable-demuxer=flv \
 			--enable-demuxer=hds \
@@ -416,7 +411,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-demuxer=image2pipe \
 			--enable-demuxer=image_jpeg_pipe \
 			--enable-demuxer=image_png_pipe \
-			--enable-demuxer=m4v \
 			--enable-demuxer=matroska \
 			--enable-demuxer=mjpeg \
 			--enable-demuxer=mov \
@@ -428,8 +422,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--enable-demuxer=ogg \
 			--enable-demuxer=pcm_s16be \
 			--enable-demuxer=pcm_s16le \
-			--enable-demuxer=pcm_s24be \
-			--enable-demuxer=pcm_s24le \
 			--enable-demuxer=rm \
 			--enable-demuxer=rtp \
 			--enable-demuxer=rtsp \
@@ -439,7 +431,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			\
 			--disable-protocol=cache \
 			--disable-protocol=concat \
-			--disable-protocol=crypto \
 			--disable-protocol=data \
 			--disable-protocol=ftp \
 			--disable-protocol=gopher \
@@ -452,33 +443,25 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPE
 			--disable-protocol=subfile \
 			--disable-protocol=unix \
 			\
-			--disable-filters \
 			--enable-filter=scale \
 			\
-			--disable-indevs \
-			\
-			--disable-outdevs \
-			\
-			$(FFMPEG_CONF_OPTS) \
-			\
-			--disable-iconv \
 			--disable-xlib \
 			--disable-libxcb \
 			--disable-postproc \
-			--disable-static \
-			--disable-debug \
-			--disable-runtime-cpudetect \
-			\
 			--enable-bsfs \
+			--disable-indevs \
+			--disable-outdevs \
 			--enable-bzlib \
 			--enable-zlib \
+			$(FFMPEG_CONF_OPTS) \
+			--disable-static \
 			--enable-openssl \
 			--enable-network \
 			--enable-shared \
 			--enable-small \
 			--enable-stripping \
-			--disable-librtmp \
-			\
+			--disable-debug \
+			--disable-runtime-cpudetect \
 			--enable-cross-compile \
 			--cross-prefix=$(TARGET)- \
 			--extra-cflags="$(TARGET_CFLAGS) $(FFMPEG_EXTRA_CFLAGS)" \
