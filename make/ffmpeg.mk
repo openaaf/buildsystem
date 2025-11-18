@@ -333,6 +333,10 @@ ifeq ($(IMAGE), $(filter $(IMAGE), titan titan-wlandriver))
 
 endif
 
+	ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+		FFMPEG_CONF_OPTS += --enable-muxer=hevc --enable-parser=hevc --enable-decoder=hevc
+	endif
+
 	FFMPEG_CONF_OPTS += --disable-armv5te --disable-armv6 --disable-armv6t2
 
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(FFMPEG_EXTERN) $(LIBRTMPDUMP) $(ARCHIVE)/$(FFMPEG_SOURCE)
