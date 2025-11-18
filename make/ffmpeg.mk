@@ -246,19 +246,19 @@ endif
 
 ifeq ($(FFMPEG_VER), 3.4.2)
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-#FFMPEG_PATCH  = ffmpeg-01_dashdec_improvements-$(FFMPEG_VER).patch
-FFMPEG_PATCH = ffmpeg-02_fix_mpegts-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-03_allow_to_choose_rtmp_impl_at_runtime-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-04_hls_replace_key_uri-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-05_chunked_transfer_fix_eof-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-06_optimize_aac-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-07_increase_buffer_size-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-08_recheck_discard_flags-$(FFMPEG_VER).patch
-#FFMPEG_PATCH += ffmpeg-09_ffmpeg_fix_edit_list_parsing-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-mips64_cpu_detection-$(FFMPEG_VER).patch
-#FFMPEG_PATCH += ffmpeg-hds-libroxml-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_diagnostics-color=auto.patch
+#FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-dashdec-improvements.patch
+FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-fix-mpegts.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow-to-choose-rtmp-impl-at-runtime.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls-replace-key-uri.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-chunked-transfer-fix-eof.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-optimize-aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-increase-buffer-size.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-recheck-discard-flags.patch
+#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64-cpu-detection.patch
+#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-kodi.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove-diagnostics-color-auto.patch
 #close @end
 #endif
 
