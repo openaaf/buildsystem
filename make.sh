@@ -74,11 +74,11 @@ export BS_GCC_VER
 
 # basic ffmpeg version numbers
 FFMPEG_VER2="2.8.22"
+FFMPEG_VER34="3.4.2"
 FFMPEG_VER3="3.4.3"
 FFMPEG_VER42="4.2.2"
 FFMPEG_VER43="4.3.2"
 FFMPEG_VER44="4.4.2"
-
 ##############################################
 
 # Check for quiet / verbose argument
@@ -437,7 +437,8 @@ case "$IMAGE" in
 
 		# Select ffmpeg version by uncommenting one line (used for internal player)
 		#FFMPEG_VER=$FFMPEG_VER2
-		FFMPEG_VER=$FFMPEG_VER3
+#		FFMPEG_VER=$FFMPEG_VER3
+		FFMPEG_VER=$FFMPEG_VER34
 		#FFMPEG_VER=$FFMPEG_VER42
 #		FFMPEG_VER=$FFMPEG_VER43
 		#FFMPEG_VER=$FFMPEG_VER44
