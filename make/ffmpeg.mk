@@ -263,10 +263,15 @@ FFMPEG_EXTRA_CFLAGS = -I$(TARGET_DIR)/usr/include
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 FFMPEG_CONF_OPTS = --enable-muxer=hevc --enable-parser=hevc --enable-decoder=hevc
 endif
+#			--enable-libroxml \
+#			--enable-libass \
+#
+#$(D)/libass $(D)/libxml2 $(D)/libroxml
+
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(D)/libass $(D)/libxml2 $(D)/libroxml $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
@@ -467,13 +472,12 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/zlib $(D)/bzip2 $(D)/libass $(D)/l
 			--enable-bsfs \
 			--enable-bzlib \
 			--enable-zlib \
-			--enable-libass \
 			--enable-openssl \
 			--enable-network \
-			--enable-libroxml \
 			--enable-shared \
 			--enable-small \
 			--enable-stripping \
+			--disable-librtmp \
 			\
 			--enable-cross-compile \
 			--cross-prefix=$(TARGET)- \
