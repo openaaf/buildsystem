@@ -339,9 +339,10 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(FFMPEG_EXTERN) $(LIBRTMPDU
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
-	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
-		$(call post_patch,$(FFMPEG_PATCH)); \
-		./configure \
+	$(CH_DIR)/ffmpeg-$(FFMPEG_VER); \
+		$(call apply_patches, $(FFMPEG_PATCH)); \
+		./configure $(SILENT_OPT) \
+			--disable-ffserver \
 			--disable-ffplay \
 			--disable-ffprobe \
 			\
