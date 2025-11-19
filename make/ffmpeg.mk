@@ -322,8 +322,13 @@ ifeq ($(IMAGE), $(filter $(IMAGE), titan titan-wlandriver))
 		endif
 	else
 	#	FFMPEG_EXTERN = $(D)/libroxml
-		FFMPEG_CONF_OPTS   = --disable-librtmp
-		FFMPEG_EXTERN =
+		ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
+				FFMPEG_EXTERN = $(D)/libx264
+				FFMPEG_CONF_OPTS  += --enable-libx264 --enable-encoder=libx264 --enable-demuxer=h264 --enable-muxer=dash --enable-gpl --enable-nonfree
+		else
+			FFMPEG_CONF_OPTS   = --disable-librtmp
+			FFMPEG_EXTERN =
+		endif
 		FFMPEG_DISABLE = --disable-muxers --disable-parsers --disable-encoders --disable-decoders --disable-demuxers --disable-filters
 	endif
 
