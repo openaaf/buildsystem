@@ -56,6 +56,9 @@ printenv:
 	@echo "DESTINATION      : $(DESTINATION)"
 #endif
 	@echo "IMAGE            : $(IMAGE)"
+	@echo "BUILDUSER        : $(BUILDUSER)"
+	@echo "FFMPEG_VER       : $(FFMPEG_VER)"
+	@echo "HOST_VERSION_ID  : $(HOST_VERSION_ID)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
 	@echo "FLAVOUR                      : $(FLAVOUR)"
