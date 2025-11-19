@@ -1439,7 +1439,8 @@ endif
 # ffmpeg 4.3.2 smal
 #
 ifeq ($(FFMPEG_VER), 4.3.2_smal)
-FFMPEG_SOURCE = ffmpeg-4.3.2.tar.xz
+FFMPEG_VER="4.3.2"
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
