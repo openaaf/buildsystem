@@ -446,6 +446,34 @@ case "$IMAGE" in
 #		export FFMPEG_VER
 #		echo "FFMPEG_VER=$FFMPEG_VER" >> config
 
+		#version read from make.sh
+		#default
+		#FFMPEG_VER = 3.2.2
+		#ufs912
+		#FFMPEG_VER = 3.4.2
+		#ufs912 full
+		#FFMPEG_VER = 4.3.2
+
+		case $7 in
+			[1-3]) REPLY=$7;;
+			*)	echo -e "\nWhich FFMpeg Version:"
+				echo "   1)  3.4.2"
+				echo "   2)  4.3.2_smal"
+				echo "   3)  4.3.2 ssl1.1"
+				read -p "Select FFMpeg Version to build (1-3)? ";;
+		esac
+
+		case "$REPLY" in
+			1) FFMPEG_VER="3.4.2";;
+			2) FFMPEG_VER="4.3.2_smal";;
+			3) FFMPEG_VER="4.3.2";;
+			*) FFMPEG_VER="4.3.2";;
+		esac
+
+		echo "FFMPEG_VER=$FFMPEG_VER" >> config
+
+		############
+
 		if [ "$OPTIMIZATIONS" == "small" ]; then
 			OPTIMIZATIONS="size"
 		fi
