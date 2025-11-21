@@ -66,6 +66,7 @@ titan-release-cuberevo_mini2: titan-release-cube_common titan-release-cube_commo
 #
 # cuberevo_mini
 #
+titan-release-cuberevo_mini: titan-release-cube_common titan-release-cube_common_tuner
 #	$(SILENT)cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/cuberevo_micom/cuberevo_micom.ko $(RELEASE_DIR)/lib/modules/
 	$(SILENT)if [ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/ipbox/micom.ko ]; then \
 		cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/ipbox/micom.ko $(RELEASE_DIR)/lib/modules/micom.ko; \
